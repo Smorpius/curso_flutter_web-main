@@ -14,18 +14,14 @@ class _LandingViewState extends State<LandingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Landing Page'),
-        backgroundColor: Colors.blue,
-      ),
       body: Row(
         children: [
           // Barra lateral
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            width: isOpen ? 250 : 70,
+            width: isOpen ? 210 : 60,
             decoration: BoxDecoration(
-              color: Colors.blue,
+              // color: Colors.white,
               border: Border(
                 right: BorderSide(color: Colors.grey.shade300, width: 0.5),
               ),
@@ -34,11 +30,11 @@ class _LandingViewState extends State<LandingView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 70,
-                  width: 70,
+                  height: 60,
+                  width: 60,
                   child: IconButton(
                     icon: Icon(isOpen ? Icons.arrow_back : Icons.menu),
-                    color: Colors.white,
+                    color: Colors.grey[800],
                     onPressed: () {
                       setState(() {
                         isOpen = !isOpen;
@@ -49,28 +45,16 @@ class _LandingViewState extends State<LandingView> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                if (isOpen)
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Menu',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
                 _buildMenuItem(
-                  Icons.book,
+                  Icons.noise_control_off_rounded,
                   "Projects",
                 ),
                 _buildMenuItem(
-                  Icons.edit_note_rounded,
+                  Icons.stay_primary_landscape_rounded,
                   "Drafts",
                 ),
                 _buildMenuItem(
-                  Icons.switch_access_shortcut_add_rounded,
+                  Icons.css_rounded,
                   "Shared with me",
                 ),
                 const Spacer(),
@@ -81,12 +65,53 @@ class _LandingViewState extends State<LandingView> {
               ],
             ),
           ),
-          // Cuerpo principal
-          Expanded(
-            child: Center(
-              child: Text(
-                'Welcome to the Landing Page',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          // Contenido principal
+          const Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+              child: Column(
+                //arriba a abajo
+                mainAxisAlignment: MainAxisAlignment.start,
+                //de izquierda a derecha
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Side Hustle',
+                        style: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        size: 30,
+                      ),
+                      Spacer(),
+                      Icon(
+                        //icono de un link
+                        Icons.link,
+                        size: 30,
+                      ),
+                      SizedBox(width: 20),
+                      Text(
+                        'Share',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      //icono de 3 puntos acostado
+                      Icon(
+                        Icons.more_horiz,
+                        size: 30,
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
@@ -95,11 +120,36 @@ class _LandingViewState extends State<LandingView> {
     );
   }
 
+  // Widget para los elementos del menú
   Widget _buildMenuItem(IconData icon, String title) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.white),
-      title: isOpen ? Text(title, style: TextStyle(color: Colors.white)) : null,
-      onTap: () {},
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: InkWell(
+        onTap: () {},
+        child: SizedBox(
+          width: isOpen ? 210 : 60,
+          child: Row(
+            children: [
+              SizedBox(
+                width: 60,
+                height: 60,
+                child: Icon(icon, color: Colors.grey[800], size: 24),
+              ),
+              if (isOpen) ...[
+                const SizedBox(width: 10), // Espacio entre icono y texto
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.grey[800],
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
